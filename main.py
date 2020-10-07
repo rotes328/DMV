@@ -50,7 +50,10 @@ class ProcessData:
                 time.sleep(interval)
 
 
-loclist = ["Bakers Basin", "Oakland", "Bayonne", "Paterson", "Camden", "Rahway", "Cardiff", "Randolph", "Delanco", "Rio Grande", "Eatontown", "Salem", "Edison", "S. Plainfield", "Flemington", "Toms River", "Freehold", "Vineland", "Lodi",  "Wayne", "Newark", "W. Deptford", "N. Bergen"]
+#Variables:
+loclist = ["Bakers Basin", "Oakland", "Bayonne", "Paterson", "Camden", "Rahway", "Cardiff", "Randolph", "Delanco", \
+    "Rio Grande", "Eatontown", "Salem", "Edison", "S. Plainfield", "Flemington", "Toms River", "Freehold", "Vineland", \
+    "Lodi",  "Wayne", "Newark", "W. Deptford", "N. Bergen"]
 today = date.today()
 timenow = datetime.now()
 d1 = today.strftime("%b-%d-%Y")
@@ -63,8 +66,8 @@ interval_in_seconds = 1
 attempts = 3
 
 def intro(a, b):
-    print("DMV Scraper Version 2 by Mike Rotella 10-07-2020")
-    print("Proccessing every {} seconds for {} attempts.".format(a, b))
+    print("\nDMV Scraper Version 2 by Mike Rotella 10-07-2020")
+    print("Proccessing every {} seconds for {} attempts.\n".format(a, b))
     return
 
 try:
@@ -82,6 +85,7 @@ with open(output, "a") as f:
 if len(sys.argv) == 3 and a > 0 and a < 61 and b > 0 and b < 481:
     intro(a, b)
     print(loclist)
+    print("-"*275)
     ProcessData(website).process(a, b, output, loclist)
 else:
     a = interval_in_seconds
@@ -89,4 +93,5 @@ else:
     intro(a, b)
     print("\nUse arguments [inteval in seconds between 1 and 60] [attempts between 1 and 480] to change defaults.\n")
     print(loclist)
+    print("-"*275)
     ProcessData(website).process(a, b, output, loclist)
