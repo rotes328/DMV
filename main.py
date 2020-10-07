@@ -3,13 +3,17 @@ from bs4 import BeautifulSoup
 import json
 import time
 from datetime import datetime
+from datetime import date
 
 class Scraper:
 
     def __init__(self, site):
         self.site = site
 
-    def scrape(self):
+
+    def scrape(self, output_file, locations_list = []):
+        self.outputfile = output_file
+        self.locations = locations_list
         r = urllib.request.urlopen(self.site)
         html = r.read()
         soup = BeautifulSoup(html, 'html.parser')
@@ -19,23 +23,42 @@ class Scraper:
             texttagnew = texttag.replace("    ", " ")
             now = datetime.now()
             current_time = now.strftime("%H:%M:%S")
-            if texttagnew in locations:
-                loc = locations.index(texttagnew)
-                locations[loc] = current_time
-        print(locations)
-        with open("outputfile.csv", "a") as f:
-            f.write(json.dumps(locations))
+            if texttagnew in self.locations:
+                loc = self.locations.index(texttagnew)
+                self.locations[loc] = current_time
+        print(self.locations)
+        with open(self.outputfile, "a") as f:
+            f.write(json.dumps(self.locations))
             f.write('\n')
 
 
-locations = ["Bakers Basin", "Oakland", "Bayonne", "Paterson", "Camden", "Rahway", "Cardiff", "Randolph", "Delanco", "Rio Grande", "Eatontown", "Salem", "Edison", "S. Plainfield", "Flemington", "Toms River", "Freehold", "Vineland", "Lodi",  "Wayne", "Newark", "W. Deptford", "N. Bergen"]
-print(locations)
+class ProcessData:
 
-with open("outputfile.csv", "a") as f:
-    f.write(json.dumps(locations))
+    def __init__(self, site):
+        self.site = site
+
+
+    def process(self, interval, max_interval, output_file, locations_list = []):
+        self.interval = interval
+        self.max_interval = max_interval
+        self.output_file = output_file
+        self.locations_list = locations_list
+        for i in range (max_interval):
+            Scraper(self.site).scrape(self.output_file, self.locations_list)
+            time.sleep(interval)
+
+
+loclist = ["Bakers Basin", "Oakland", "Bayonne", "Paterson", "Camden", "Rahway", "Cardiff", "Randolph", "Delanco", "Rio Grande", "Eatontown", "Salem", "Edison", "S. Plainfield", "Flemington", "Toms River", "Freehold", "Vineland", "Lodi",  "Wayne", "Newark", "W. Deptford", "N. Bergen"]
+today = date.today()
+d1 = today.strftime("%b-%d-%Y")
+output = "outputfile" + d1 + ".csv"
+website = "https://www.state.nj.us/mvc/locations/agency.htm"
+
+print("DMV Scraper Version 2 by Mike Rotella 10-07-2020")
+print(loclist)
+
+with open(output, "a") as f:
+    f.write(json.dumps(loclist))
     f.write('\n')
 
-for i in range (120):
-    website = "https://www.state.nj.us/mvc/locations/agency.htm"
-    Scraper(website).scrape()
-    time.sleep(60)
+ProcessData(website).process(1, 3, output, loclist)
