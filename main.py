@@ -38,12 +38,12 @@ class ProcessData:
         self.site = site
 
 
-    def process(self, interval, max_interval, output_file, locations_list = []):
+    def process(self, interval, attempts, output_file, locations_list = []):
         self.interval = interval
-        self.max_interval = max_interval
+        self.attempts = attempts
         self.output_file = output_file
         self.locations_list = locations_list
-        for i in range (max_interval):
+        for i in range (attempts):
             Scraper(self.site).scrape(self.output_file, self.locations_list)
             time.sleep(interval)
 
@@ -54,6 +54,9 @@ d1 = today.strftime("%b-%d-%Y")
 output = "outputfile" + d1 + ".csv"
 website = "https://www.state.nj.us/mvc/locations/agency.htm"
 
+interval_in_second = 1
+attempts = 5
+
 print("DMV Scraper Version 2 by Mike Rotella 10-07-2020")
 print(loclist)
 
@@ -61,4 +64,4 @@ with open(output, "a") as f:
     f.write(json.dumps(loclist))
     f.write('\n')
 
-ProcessData(website).process(1, 3, output, loclist)
+ProcessData(website).process(interval_in_second, attempts, output, loclist)
