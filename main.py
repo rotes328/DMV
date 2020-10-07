@@ -28,15 +28,14 @@ class Scraper:
             f.write('\n')
 
 
-locations = ["Bakers Basin", "Oakland", "Bayonne", "Paterson", "Camden", "Rahway", "Cardiff", "Randolph", "Delanco",
-                 "Rio Grande", "Eatontown", "S. Plainfield", "Flemington", "Toms River", "Freehold", "Vineland", "Lodi",
-                 "Wayne", "Newark", "W. Deptford", "N. Bergen"]
+locations = ["Bakers Basin", "Oakland", "Bayonne", "Paterson", "Camden", "Rahway", "Cardiff", "Randolph", "Delanco", "Rio Grande", "Eatontown", "Salem", "Edison", "S. Plainfield", "Flemington", "Toms River", "Freehold", "Vineland", "Lodi",  "Wayne", "Newark", "W. Deptford", "N. Bergen"]
+print(locations)
 
 with open("outputfile.csv", "a") as f:
     f.write(json.dumps(locations))
     f.write('\n')
 
-for i in range (210):
+for i in range (120):
     website = "https://www.state.nj.us/mvc/locations/agency.htm"
     Scraper(website).scrape()
     time.sleep(60)
