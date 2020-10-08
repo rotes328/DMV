@@ -4,6 +4,7 @@ Python program that scrapes NJ DMV website and records the time each licensing l
 
 Sample output:
 
+```
 DMV Scraper Version 2 by Mike Rotella 10-07-2020
 Proccessing every 60 seconds for 960 attempts.
 
@@ -15,3 +16,4 @@ Use arguments [inteval in seconds between 1 and 60] [attempts between 1 and 960]
 ['Bakers Basin', 'Oakland', '10:30:10', 'Paterson', 'Camden', '10:30:10', 'Cardiff', 'Randolph', 'Delanco', 'Rio Grande', 'Eatontown', 'Salem', 'Edison', 'S. Plainfield', 'Flemington', 'Toms River', 'Freehold', 'Vineland', 'Lodi', '10:30:10', '10:30:10', 'W. Deptford', '10:30:10']
 ...
 ['11:39:19', '13:32:36', '10:30:10', '13:32:36', 'Camden', '10:30:10', 'Cardiff', '12:27:25', '11:39:19', 'Rio Grande', '14:19:42', 'Salem', '11:39:19', '11:39:19', '14:19:42', '14:19:42', '11:39:19', 'Vineland', '11:39:19', '10:30:10', '10:30:10', 'W. Deptford', '10:30:10']
+```
