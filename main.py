@@ -28,9 +28,13 @@ class Scraper:
                 loc = self.locations.index(texttagnew)
                 self.locations[loc] = current_time
         print(self.locations)
-        with open(self.outputfile, "a") as f:
-            f.write(json.dumps(self.locations))
-            f.write('\n')
+        try:
+            with open(self.outputfile, "a") as f:
+                f.write(json.dumps(self.locations))
+                f.write('\n')
+        except:
+            print("Write to file failed.")
+            pass
 
 
 class ProcessData:
@@ -62,8 +66,8 @@ output = "outputfile" + d1 + "-" + d2 + ".csv"
 website = "https://www.state.nj.us/mvc/locations/agency.htm"
 
 #Defaults:
-interval_in_seconds = 1
-attempts = 3
+interval_in_seconds = 60
+attempts = 960
 
 def intro(a, b):
     print("\nDMV Scraper Version 2 by Mike Rotella 10-07-2020")
@@ -78,11 +82,14 @@ except:
     a = interval_in_seconds
     b = attempts
 
-with open(output, "a") as f:
-    f.write(json.dumps(loclist))
-    f.write('\n')
+try:
+    with open(output, "a") as f:
+        f.write(json.dumps(loclist))
+        f.write('\n')
+except:
+    pass
 
-if len(sys.argv) == 3 and a > 0 and a < 61 and b > 0 and b < 481:
+if len(sys.argv) == 3 and a > 0 and a < 61 and b > 0 and b < 961:
     intro(a, b)
     print(loclist)
     print("-"*275)
@@ -91,7 +98,7 @@ else:
     a = interval_in_seconds
     b = attempts
     intro(a, b)
-    print("\nUse arguments [inteval in seconds between 1 and 60] [attempts between 1 and 480] to change defaults.\n")
+    print("Use arguments [inteval in seconds between 1 and 60] [attempts between 1 and 960] to change defaults.\n")
     print(loclist)
     print("-"*275)
     ProcessData(website).process(a, b, output, loclist)
